@@ -1,0 +1,534 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("debe4626-cfe9-48fd-8112-e083c26efc69",
+	'Performance_Report',
+	8,
+	'PERFREP',
+	'A PERFORMANCE REPORT is created for each PROJECT based on Earned Value inputs of PV, EV, AC and BAC.
+All other Earned Value parameters and indices are derived from these four inputs.
+
+This class is based on UC12, UC13, UC14, UC14-1, and UC15. ',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_TFR
+	VALUES ("963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'Create',
+	'This operation is based on UC12.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'//Create a new performance report for a project.
+
+//Check that the named project exists.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+
+if ( not empty Project)
+	
+	//If it exists then check whether any performance report exists for the named project.
+	//If a report doesn''t then create the new report with Rep_ID = 1.  Remembering to also make Last_Rep_ID = 1.
+	//If it does exist then create the new report with Rep_ID = Last_Rep_ID + 1.
+	
+	select any Performance_Report from instances of PERFREP
+ 	where (selected.PRJ_Name == param.PRJ_Name);
+
+	if ( empty Performance_Report)
+		create object instance Performance_Report of PERFREP;
+		Performance_Report.PRJ_Name = param.PRJ_Name;
+		Performance_Report.Rep_ID = 1;
+		
+		LOG::LogInfo( message: "A new empty PERFORMANCE REPORT has been successfully created." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new PERFORMANCE REPORT " + param.PRJ_Name + "has been created.");
+		
+	else
+		
+		//Firstly find the last report for the project.
+		
+		select many Reports from instances of PERFREP
+ 		where (selected.PRJ_Name == param.PRJ_Name);
+ 	
+ 		last_report = 0;
+		
+		for each report in Reports
+			while (report.Rep_ID > last_report)
+			last_report = report.Rep_ID;
+			end while;
+		end for;
+		
+		//Now create a new report and incrementing the number of the last report.	
+
+		create object instance Performance_Report of PERFREP;
+		Performance_Report.PRJ_Name = param.PRJ_Name;
+		Performance_Report.Rep_ID = last_report + 1;
+		
+		LOG::LogInfo( message: "A new empty PERFORMANCE REPORT has been successfully created." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new PERFORMANCE REPORT " + param.PRJ_Name + "has been created.");
+		
+	end if;
+	
+	//Now transfer the base Earned Value parameters to the newly created report.
+	
+		Performance_Report.BAC = param.BAC;
+		LOG::LogReal( message: "Budget At Completion is" , r: param.BAC);
+		Performance_Report.EV = param.EV;
+		LOG::LogReal( message: "Earned Value is" , r: param.EV);
+		Performance_Report.PV = param.PV;
+		LOG::LogReal( message: "Planned Value is" , r: param.BAC);
+		Performance_Report.AC = param.AC;
+		LOG::LogReal( message: "Actual Cost is" , r: param.BAC);
+
+else
+		LOG::LogFailure( message: "The chosen PROJECT does not exist.  Please choose a PROJECT NAME that already exists." );
+end if;
+
+//Call operation to Calculate Variances for the last report.
+
+	PERFREP::calc_EV_Vars( PRJ_Name:param.PRJ_Name);',
+	1,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	1);
+INSERT INTO O_TPARM
+	VALUES ("8ad6f00d-cb30-4e37-a745-f8f89c666a7d",
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("270420c7-f211-4502-894a-746badc13f49",
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	'BAC',
+	"ba5eda7a-def5-0000-0000-000000000003",
+	0,
+	'',
+	"8ad6f00d-cb30-4e37-a745-f8f89c666a7d",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("c47ddd9e-9401-4bae-bdfd-45e06100d5ae",
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	'EV',
+	"ba5eda7a-def5-0000-0000-000000000003",
+	0,
+	'',
+	"270420c7-f211-4502-894a-746badc13f49",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("b2602f4a-ab54-4e7e-af8f-f3a981a56e98",
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	'PV',
+	"ba5eda7a-def5-0000-0000-000000000003",
+	0,
+	'',
+	"c47ddd9e-9401-4bae-bdfd-45e06100d5ae",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("d5c28e30-05a4-498a-9de4-da9512611560",
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	'AC',
+	"ba5eda7a-def5-0000-0000-000000000003",
+	0,
+	'',
+	"b2602f4a-ab54-4e7e-af8f-f3a981a56e98",
+	'');
+INSERT INTO O_TFR
+	VALUES ("17ac84a4-8234-4318-8a48-06273d723012",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'calc_EV_Vars',
+	'This operation is based on UC13.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'//Calculate Variances relating to the last report for a specific project.
+
+//Check that the named project exists.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+
+if ( not empty Project)
+	
+	//If it exists then check whether any performance report exists for the named project.
+	//If a report doesn''t then create the new report with Rep_ID = 1.  Remembering to also make Last_Rep_ID = 1.
+	//If it does exist then create the new report with Rep_ID = Last_Rep_ID + 1.
+	
+	select many Reports from instances of PERFREP
+ 	where (selected.PRJ_Name == param.PRJ_Name);
+ 	
+ 		last_report = 0;
+		
+		for each report in Reports
+			while (report.Rep_ID > last_report)
+			last_report = report.Rep_ID;
+			end while;
+		end for;
+
+		create object instance Performance_Report of PERFREP;
+		Performance_Report.PRJ_Name = param.PRJ_Name;
+		Performance_Report.Rep_ID = last_report + 1;
+		
+		LOG::LogInfo( message: "A new empty PERFORMANCE REPORT has been successfully created." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new PERFORMANCE REPORT " + param.PRJ_Name + "has been created.");
+	
+	//Now use the base Earned Value parameters to calculate the variances.
+	
+	//Cost Variance
+	
+		Performance_Report.CV = Performance_Report.EV - Performance_Report.AC;
+		
+		LOG::LogReal( message: "Cost Variance has been calculate at" , r: Performance_Report.CV);
+		
+		Performance_Report.SV = Performance_Report.EV - Performance_Report.PV;
+		
+		LOG::LogReal( message: "Earned Value is" , r: Performance_Report.SV);
+
+
+else
+		LOG::LogFailure( message: "The chosen PROJECT does not exist.  Please choose a PROJECT NAME that already exists." );
+end if;
+
+//Call operation to Calculate Variances for the last report.
+
+	PERFREP::calc_EV_PIs(PRJ_Name:param.PRJ_Name);',
+	1,
+	'',
+	"963fa6c9-de69-4936-9e4d-7681eb74fb88",
+	0,
+	2);
+INSERT INTO O_TPARM
+	VALUES ("3d9a9f59-a8c6-409f-938f-d47a59c2aa6c",
+	"17ac84a4-8234-4318-8a48-06273d723012",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TFR
+	VALUES ("46c04271-b532-400b-8347-20e00407300a",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'calc_EV_PIs',
+	'This operation is based on UC14.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'',
+	1,
+	'',
+	"17ac84a4-8234-4318-8a48-06273d723012",
+	0,
+	3);
+INSERT INTO O_TPARM
+	VALUES ("c2b83670-083e-4446-994a-253cd99e3699",
+	"46c04271-b532-400b-8347-20e00407300a",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TFR
+	VALUES ("379862e0-22ab-4557-baed-9a5f8da9b647",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'show_EV_PIs',
+	'This operation is based on UC14-1.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	1,
+	'',
+	"46c04271-b532-400b-8347-20e00407300a",
+	0,
+	4);
+INSERT INTO O_TFR
+	VALUES ("dbdc7629-e770-4522-910f-17fae3c525b4",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'calc_Completion_Params',
+	'This operation is based on UC15.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	1,
+	'',
+	"379862e0-22ab-4557-baed-9a5f8da9b647",
+	0,
+	5);
+INSERT INTO O_TFR
+	VALUES ("a02c70b1-4f88-4d44-bffc-2bc40286f12b",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'XYZ',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	1,
+	'',
+	"dbdc7629-e770-4522-910f-17fae3c525b4",
+	0,
+	6);
+INSERT INTO O_NBATTR
+	VALUES ("76434f9b-b069-4b88-92d7-3a523a006d3c",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("76434f9b-b069-4b88-92d7-3a523a006d3c",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("76434f9b-b069-4b88-92d7-3a523a006d3c",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"00000000-0000-0000-0000-000000000000",
+	'BAC',
+	'The Earned Value parameter for Budget At Completion.  The first use of BAC value will correspond to the estimated total cost to complete the project.
+As the project progresses the BAC value is likely to change - usually increasinly.',
+	'',
+	'BAC',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("09c1f37a-f6c2-4344-aeca-73ed80112736",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("09c1f37a-f6c2-4344-aeca-73ed80112736",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("09c1f37a-f6c2-4344-aeca-73ed80112736",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"76434f9b-b069-4b88-92d7-3a523a006d3c",
+	'PV',
+	'The Earned Value parameter to track Planned Value at chosen points in time during the course of a project.',
+	'',
+	'PV',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("7f3d898f-98c6-4b9a-8e3c-08efc1ab8c1e",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("7f3d898f-98c6-4b9a-8e3c-08efc1ab8c1e",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("7f3d898f-98c6-4b9a-8e3c-08efc1ab8c1e",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"09c1f37a-f6c2-4344-aeca-73ed80112736",
+	'EV',
+	'The Earned Value parameter to track the the actual Earned Value in terms of completed (planned) work at chosen points in time during the course of a project.',
+	'',
+	'EV',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("418331bb-6eef-4b95-8b89-20c4ac009f69",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("418331bb-6eef-4b95-8b89-20c4ac009f69",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("418331bb-6eef-4b95-8b89-20c4ac009f69",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"7f3d898f-98c6-4b9a-8e3c-08efc1ab8c1e",
+	'AC',
+	'The Earned Value parameter for tracking the Actual Cost of the work completed at chosen points in time during the course of a project.',
+	'',
+	'AC',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("420d04f5-3216-475e-9d41-864e45f30216",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("420d04f5-3216-475e-9d41-864e45f30216",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("420d04f5-3216-475e-9d41-864e45f30216",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"8672b855-9d39-445b-894f-e34005cbaadf",
+	'EAC',
+	'The Earned Value parameter for Estimate At Completion - calculated in several ways to provide an estimate to complete a project based on a chosen point in time using other (already calculated) Earned Value parameters.
+',
+	'',
+	'EAC',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("a43523ec-c977-42c7-b1b8-bdaf405c2577",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("a43523ec-c977-42c7-b1b8-bdaf405c2577",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("a43523ec-c977-42c7-b1b8-bdaf405c2577",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"1eab4692-29db-48f8-a1f9-1bb36bd18cc3",
+	'ETC',
+	'The Earned Value parameter for Estimate To Complete - calculated as EAC - AC based on a chosen point in time typically during the latter part of a project.  Don''t really want this value to be negative.',
+	'',
+	'ETC',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("7b3e4961-3daa-406c-9ad9-53eff9724f04",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("7b3e4961-3daa-406c-9ad9-53eff9724f04",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("7b3e4961-3daa-406c-9ad9-53eff9724f04",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"6c344b7d-0353-4239-8e07-e704688c263a",
+	'SV',
+	'The Earned Value parameter fo Schedule Variance - calculate as EV - PV. Really needs to be a positive value for project to do better than the planned schedule.',
+	'',
+	'SV',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("6c344b7d-0353-4239-8e07-e704688c263a",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("6c344b7d-0353-4239-8e07-e704688c263a",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("6c344b7d-0353-4239-8e07-e704688c263a",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"418331bb-6eef-4b95-8b89-20c4ac009f69",
+	'CV',
+	'The Earned Value parameter fo Cost Variance - calculate as EV - AC. Really needs to be a positive value for project to perform within scheduled cost.',
+	'',
+	'CV',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("8672b855-9d39-445b-894f-e34005cbaadf",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("8672b855-9d39-445b-894f-e34005cbaadf",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("8672b855-9d39-445b-894f-e34005cbaadf",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"46ec63ed-b7fa-4269-ab84-552de9efa81d",
+	'SPI',
+	'The Earned Value parameter fo Schedule Performance Index - calculate as EV / PV. Really needs to be > 1.0 for project to do better than the planned schedule.',
+	'',
+	'SPI',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("46ec63ed-b7fa-4269-ab84-552de9efa81d",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("46ec63ed-b7fa-4269-ab84-552de9efa81d",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("46ec63ed-b7fa-4269-ab84-552de9efa81d",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"7b3e4961-3daa-406c-9ad9-53eff9724f04",
+	'CPI',
+	'The Earned Value parameter fo Cost Performance Index - calculate as EV / AC. Really needs to be > 1.0 for project to perform within scheduled cost.',
+	'',
+	'CPI',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("1eab4692-29db-48f8-a1f9-1bb36bd18cc3",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("1eab4692-29db-48f8-a1f9-1bb36bd18cc3",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("1eab4692-29db-48f8-a1f9-1bb36bd18cc3",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"420d04f5-3216-475e-9d41-864e45f30216",
+	'VAC',
+	'The Earned Value parameter for Vvariance At Completion - calculated as BAC - EAC based on a chosen point in time during the course of a project.  Needs to be a positive value to perform better than expected.',
+	'',
+	'VAC',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("4e736cb5-235e-4c53-a0d6-778a00658620",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("4e736cb5-235e-4c53-a0d6-778a00658620",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("4e736cb5-235e-4c53-a0d6-778a00658620",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"a43523ec-c977-42c7-b1b8-bdaf405c2577",
+	'Rep_ID',
+	'',
+	'',
+	'Rep_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000002",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("a406f926-5945-4a0d-ac2e-1b2855263f65",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_BATTR
+	VALUES ("a406f926-5945-4a0d-ac2e-1b2855263f65",
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ATTR
+	VALUES ("a406f926-5945-4a0d-ac2e-1b2855263f65",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	"4e736cb5-235e-4c53-a0d6-778a00658620",
+	'PRJ_Name',
+	'',
+	'',
+	'PRJ_Name',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_OIDA
+	VALUES ("a406f926-5945-4a0d-ac2e-1b2855263f65",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	0,
+	'PRJ_Name');
+INSERT INTO O_ID
+	VALUES (1,
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO O_ID
+	VALUES (2,
+	"debe4626-cfe9-48fd-8112-e083c26efc69");
+INSERT INTO PE_PE
+	VALUES ("debe4626-cfe9-48fd-8112-e083c26efc69",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

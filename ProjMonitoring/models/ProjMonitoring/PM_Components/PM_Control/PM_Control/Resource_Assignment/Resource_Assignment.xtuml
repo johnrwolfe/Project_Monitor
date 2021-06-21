@@ -1,0 +1,32 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("bc255c35-7ee7-43ff-8227-3567b5b353cd",
+	'Resource_Assignment',
+	7,
+	'RESASS',
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_ID
+	VALUES (0,
+	"bc255c35-7ee7-43ff-8227-3567b5b353cd");
+INSERT INTO O_ID
+	VALUES (1,
+	"bc255c35-7ee7-43ff-8227-3567b5b353cd");
+INSERT INTO O_ID
+	VALUES (2,
+	"bc255c35-7ee7-43ff-8227-3567b5b353cd");
+INSERT INTO PE_PE
+	VALUES ("bc255c35-7ee7-43ff-8227-3567b5b353cd",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

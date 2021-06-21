@@ -1,0 +1,147 @@
+-- BP 7.1.6 content: Interface syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO C_I
+	VALUES ("a1785323-9842-4f78-9c7c-66eac1ae5d6a",
+	"00000000-0000-0000-0000-000000000000",
+	'Portfolio_Management',
+	'An I/F to allow particular communications with Portfolio Managers or their representatives.');
+INSERT INTO C_EP
+	VALUES ("2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"a1785323-9842-4f78-9c7c-66eac1ae5d6a",
+	-1,
+	'add_Portfolio',
+	'This signal incorporates not only a new portfolio identifier, but also a strategic goal idetifier.
+Mainly to ensure that the PORTFOLIO is associated with the correct STRATEGIC GOAL right from get-go.
+
+This is much the same as for adding PROGRAMS.
+Thus the basic aspects of all UC01, UC06 and and UC01-1 are incorporated here.',
+	1);
+INSERT INTO C_AS
+	VALUES ("2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	'add_Portfolio',
+	'This signal incorporates not only a new portfolio identifier, but also a strategic goal idetifier.
+Mainly to ensure that the PORTFOLIO is associated with the correct STRATEGIC GOAL right from get-go.
+
+This is much the same as for adding PROGRAMS.
+Thus the basic aspects of all UC01, UC06 and and UC01-1 are incorporated here.',
+	0,
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("43fe6833-1094-4c68-b42e-e75e31b89bac",
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'PF_Name',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("bb8677bc-7df4-4185-b089-7875530e4981",
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Goal_ID',
+	'',
+	0,
+	'',
+	"43fe6833-1094-4c68-b42e-e75e31b89bac");
+INSERT INTO C_PP
+	VALUES ("95b1ba9b-6772-4ac1-a101-92b831fc4678",
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Description',
+	'',
+	0,
+	'',
+	"bb8677bc-7df4-4185-b089-7875530e4981");
+INSERT INTO C_PP
+	VALUES ("001179d1-684a-409b-a177-0e51b11f8e5f",
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'Budget',
+	'',
+	0,
+	'',
+	"95b1ba9b-6772-4ac1-a101-92b831fc4678");
+INSERT INTO C_PP
+	VALUES ("3615a52d-d581-4904-8b93-52127a392d41",
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Manager',
+	'',
+	0,
+	'',
+	"001179d1-684a-409b-a177-0e51b11f8e5f");
+INSERT INTO C_EP
+	VALUES ("0ef181e4-da1a-4a11-a858-de246d662545",
+	"a1785323-9842-4f78-9c7c-66eac1ae5d6a",
+	-1,
+	'set_Priority',
+	'',
+	2);
+INSERT INTO C_AS
+	VALUES ("0ef181e4-da1a-4a11-a858-de246d662545",
+	'set_Priority',
+	'',
+	0,
+	"2c24502e-f8c3-4c4d-b7c2-eb2faf53bfbc");
+INSERT INTO C_PP
+	VALUES ("e7514e33-d07d-4f14-85b9-7a47008c622e",
+	"0ef181e4-da1a-4a11-a858-de246d662545",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'PF_Name',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("ec81f0b0-f437-4b93-8c27-a1ab26e45bc8",
+	"0ef181e4-da1a-4a11-a858-de246d662545",
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	'Priority',
+	'',
+	0,
+	'',
+	"e7514e33-d07d-4f14-85b9-7a47008c622e");
+INSERT INTO S_DT_PROXY
+	VALUES ("65dcb48f-06c0-434e-be18-b05dfa982146",
+	"00000000-0000-0000-0000-000000000000",
+	'Priority_Level',
+	'',
+	'',
+	'../../PM_Types/PM_Types.xtuml');
+INSERT INTO C_EP
+	VALUES ("fc595120-b637-425b-aa0e-15edd841630b",
+	"a1785323-9842-4f78-9c7c-66eac1ae5d6a",
+	-1,
+	'close_Portfolio',
+	'',
+	3);
+INSERT INTO C_AS
+	VALUES ("fc595120-b637-425b-aa0e-15edd841630b",
+	'close_Portfolio',
+	'',
+	0,
+	"0ef181e4-da1a-4a11-a858-de246d662545");
+INSERT INTO C_PP
+	VALUES ("6b1671c1-b55e-49ab-9b41-de1edf1fb902",
+	"fc595120-b637-425b-aa0e-15edd841630b",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'PF_Name',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO PE_PE
+	VALUES ("a1785323-9842-4f78-9c7c-66eac1ae5d6a",
+	1,
+	"077be095-5328-4c6a-8a54-cde91fa66fc5",
+	"00000000-0000-0000-0000-000000000000",
+	6);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("077be095-5328-4c6a-8a54-cde91fa66fc5",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Interfaces',
+	'',
+	0,
+	'../PM_Interfaces.xtuml');

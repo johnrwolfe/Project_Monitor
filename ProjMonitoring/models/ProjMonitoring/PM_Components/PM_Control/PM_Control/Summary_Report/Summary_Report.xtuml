@@ -1,0 +1,86 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("e1e375a8-101a-4533-9544-1b3ba91e8e62",
+	'Summary_Report',
+	12,
+	'SUMREP',
+	'A SUMMARY REPORT contains an indicative status in the form of a 
+traffic light colour for each PROJECT in a PROGRAM.
+
+This class is based on UC17.',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_TFR
+	VALUES ("34f4e69c-3e8d-4bc9-831c-18a15ea521fa",
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62",
+	'create_Report',
+	'This operation is based on UC17.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'',
+	1,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	1);
+INSERT INTO O_TFR
+	VALUES ("cf160401-1418-4566-b3eb-c46e44ca2289",
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62",
+	'browse_Report',
+	'This operation is based on UC18.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	1,
+	'',
+	"34f4e69c-3e8d-4bc9-831c-18a15ea521fa",
+	0,
+	2);
+INSERT INTO O_NBATTR
+	VALUES ("6dd0554d-00b1-416b-a094-2449217f2305",
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62");
+INSERT INTO O_BATTR
+	VALUES ("6dd0554d-00b1-416b-a094-2449217f2305",
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62");
+INSERT INTO O_ATTR
+	VALUES ("6dd0554d-00b1-416b-a094-2449217f2305",
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62",
+	"00000000-0000-0000-0000-000000000000",
+	'Traffic_Light',
+	'',
+	'',
+	'Traffic_Light',
+	0,
+	"9dc71f19-9575-423a-8869-cc0a09aa5f7d",
+	'',
+	'');
+INSERT INTO S_DT_PROXY
+	VALUES ("9dc71f19-9575-423a-8869-cc0a09aa5f7d",
+	"00000000-0000-0000-0000-000000000000",
+	'Status_Colour',
+	'',
+	'',
+	'../../../../PM_Types/PM_Types.xtuml');
+INSERT INTO O_ID
+	VALUES (0,
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62");
+INSERT INTO O_ID
+	VALUES (1,
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62");
+INSERT INTO O_ID
+	VALUES (2,
+	"e1e375a8-101a-4533-9544-1b3ba91e8e62");
+INSERT INTO PE_PE
+	VALUES ("e1e375a8-101a-4533-9544-1b3ba91e8e62",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

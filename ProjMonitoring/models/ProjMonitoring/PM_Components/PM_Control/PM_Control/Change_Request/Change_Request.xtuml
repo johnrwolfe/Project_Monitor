@@ -1,0 +1,88 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("252de520-5135-4f5a-a15a-90984698056e",
+	'Change_Request',
+	11,
+	'PRCR',
+	'A CHANGE REQUEST can be submitted at any time during the running of a PROGRAM.
+As to whether the CHANGE REQUEST is acted on is left to the PROGRAM manager who
+is otherwise notified. 
+
+An assumption being made for the MVP is that a CHANGE REQUEST (if not ignored) will 
+lead to one or more REQUIREMENTS to be added and implemented for the overall PROGRAM.
+
+This class is based on UC05.',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_TFR
+	VALUES ("92db6053-d485-422a-9405-acc4eeb07060",
+	"252de520-5135-4f5a-a15a-90984698056e",
+	'submit_Change_Request',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'',
+	1,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	3);
+INSERT INTO O_NBATTR
+	VALUES ("153fe15e-d277-4e00-a3cf-83dc191ba9e2",
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_BATTR
+	VALUES ("153fe15e-d277-4e00-a3cf-83dc191ba9e2",
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_ATTR
+	VALUES ("153fe15e-d277-4e00-a3cf-83dc191ba9e2",
+	"252de520-5135-4f5a-a15a-90984698056e",
+	"00000000-0000-0000-0000-000000000000",
+	'PRCR_ID',
+	'',
+	'',
+	'PRCR_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000002",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("0be58b5f-84de-4482-ad73-910ec97bdf7a",
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_BATTR
+	VALUES ("0be58b5f-84de-4482-ad73-910ec97bdf7a",
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_ATTR
+	VALUES ("0be58b5f-84de-4482-ad73-910ec97bdf7a",
+	"252de520-5135-4f5a-a15a-90984698056e",
+	"153fe15e-d277-4e00-a3cf-83dc191ba9e2",
+	'Description',
+	'',
+	'',
+	'Description',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_ID
+	VALUES (1,
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO O_ID
+	VALUES (2,
+	"252de520-5135-4f5a-a15a-90984698056e");
+INSERT INTO PE_PE
+	VALUES ("252de520-5135-4f5a-a15a-90984698056e",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

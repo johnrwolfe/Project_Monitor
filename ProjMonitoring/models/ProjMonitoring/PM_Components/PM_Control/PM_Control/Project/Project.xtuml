@@ -1,0 +1,223 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("18044797-4249-419f-8f55-d5516f5ef7b5",
+	'Project',
+	3,
+	'PRJ',
+	'PROJECTS is typically run externally to the Project Monitoring System.
+The information required to be monitored for PROJECTS includes EV data,
+and (perhaps) tasks (represented as WORK_ITEMS).
+
+This class is based on UC06.',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_TFR
+	VALUES ("084de765-a9ba-466d-98e9-e025d572cc9e",
+	"18044797-4249-419f-8f55-d5516f5ef7b5",
+	'Create',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'// Add an a running Project by providing a (hopefully) unique name (PRG_Name) and adding a textual Description.
+//Based on UC02 but with no requirements or resources (for now).
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+
+if ( empty Project)
+	create object instance Project of PRJ;
+	Project.PRJ_Name = param.PRJ_Name;
+	Project.Description = param.Description;
+	LOG::LogInfo( message: "An additional PROJECT has been listed." );
+	send OrgMan::Notify(Relevant_Person:"Manager", Message:"An additional PROJECT " + param.PRJ_Name + "has been listed.");
+else
+	LOG::LogFailure( message: "The chosen PROJECT NAME already exists.  Please choose a different NAME that does not already exist." );
+end if;',
+	1,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	1);
+INSERT INTO O_TPARM
+	VALUES ("76983a7b-5df6-4877-bcba-230140c9e405",
+	"084de765-a9ba-466d-98e9-e025d572cc9e",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("30b98636-61e2-4eea-91e8-228ef13d35df",
+	"084de765-a9ba-466d-98e9-e025d572cc9e",
+	'Description',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"76983a7b-5df6-4877-bcba-230140c9e405",
+	'');
+INSERT INTO O_TFR
+	VALUES ("654efed3-3d24-40a2-98ae-e135fc0d505a",
+	"18044797-4249-419f-8f55-d5516f5ef7b5",
+	'include_In_Program',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'//Include a Project in a Program.
+//Based on UC11.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+ 
+if (not empty Project)
+
+	select any Program from instances of PRG
+	 where (selected.PRG_Name == param.PRG_Name);
+
+	if ( not empty Program)
+	
+		relate self to Program across R5.''may be part of'';
+	
+		LOG::LogInfo( message: "A PROJECT has been included in a PROGRAM." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PROJECT  " + param.PRJ_Name + "has been added to a PROGRAM.");
+	else
+		LOG::LogFailure( message: "The chosen PROGRAM does not exist.  Please choose a relevant PROGRAM that already exists." );
+	end if;
+else
+	LOG::LogFailure( message: "The chosen PROJECT NAME doesn''t exist.  Please choose a NAME that already exists." );
+end if;',
+	1,
+	'',
+	"084de765-a9ba-466d-98e9-e025d572cc9e",
+	0,
+	6);
+INSERT INTO O_TPARM
+	VALUES ("16c92503-a9fd-4a44-85ca-b06d5ea7bbfb",
+	"654efed3-3d24-40a2-98ae-e135fc0d505a",
+	'PRG_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"2c1b7319-03d3-4674-9a7a-2b992321ce6b",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("2c1b7319-03d3-4674-9a7a-2b992321ce6b",
+	"654efed3-3d24-40a2-98ae-e135fc0d505a",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TFR
+	VALUES ("af8ecc64-9927-43c7-8ec3-060934c41504",
+	"18044797-4249-419f-8f55-d5516f5ef7b5",
+	'include_In_Portfolio',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'//Include a Project within a Portfolio.
+//Based on UC11.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+ 
+if (not empty Project)
+
+	select any Portfolio from instances of PF
+	 where (selected.PF_Name == param.PF_Name);
+
+	if ( not empty Portfolio)
+	
+		relate self to Portfolio across R6.''may be part of'';
+	
+		LOG::LogInfo( message: "A PROJECT has been added to a PORTFOLIO." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PROJECT  " + param.PRJ_Name + "has been added to a PORTFOLIO.");
+	else
+		LOG::LogFailure( message: "The chosen PORTFOLIO does not exist.  Please choose a relevant PORTFOLIO that already exists." );
+	end if;
+else
+	LOG::LogFailure( message: "The chosen PROJECT NAME doesn''t exist.  Please choose a NAME that already exists." );
+end if;',
+	1,
+	'',
+	"654efed3-3d24-40a2-98ae-e135fc0d505a",
+	0,
+	6);
+INSERT INTO O_TPARM
+	VALUES ("95dba634-9b8f-4cc3-af15-30df7f3237e2",
+	"af8ecc64-9927-43c7-8ec3-060934c41504",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("13d461f4-d7c8-4e5f-b924-fb021a8c8347",
+	"af8ecc64-9927-43c7-8ec3-060934c41504",
+	'PF_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"95dba634-9b8f-4cc3-af15-30df7f3237e2",
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("63751c42-d788-4dec-a3cf-cda6d54b5aae",
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_BATTR
+	VALUES ("63751c42-d788-4dec-a3cf-cda6d54b5aae",
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_ATTR
+	VALUES ("63751c42-d788-4dec-a3cf-cda6d54b5aae",
+	"18044797-4249-419f-8f55-d5516f5ef7b5",
+	"00000000-0000-0000-0000-000000000000",
+	'PRJ_Name',
+	'The unique name of a running project.',
+	'',
+	'PRJ_Name',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("6eaaaf51-3eda-49ec-926c-692fe71d4e96",
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_BATTR
+	VALUES ("6eaaaf51-3eda-49ec-926c-692fe71d4e96",
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_ATTR
+	VALUES ("6eaaaf51-3eda-49ec-926c-692fe71d4e96",
+	"18044797-4249-419f-8f55-d5516f5ef7b5",
+	"63751c42-d788-4dec-a3cf-cda6d54b5aae",
+	'Description',
+	'A succinct textual description clearly defining the essentials of a PROJECT.  This description is NOT editable.  It shoukd be copied from the Project details provided in the Project Management domain.',
+	'',
+	'Description',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_ID
+	VALUES (1,
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO O_ID
+	VALUES (2,
+	"18044797-4249-419f-8f55-d5516f5ef7b5");
+INSERT INTO PE_PE
+	VALUES ("18044797-4249-419f-8f55-d5516f5ef7b5",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

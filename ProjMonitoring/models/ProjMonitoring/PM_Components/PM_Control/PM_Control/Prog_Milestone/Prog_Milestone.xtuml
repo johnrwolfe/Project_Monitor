@@ -1,0 +1,93 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	'Prog_Milestone',
+	9,
+	'PROGMS',
+	'Programs may include one or more milestones that indicate increasing level of achievement.
+
+This class is based on UC02 & UC03.',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_NBATTR
+	VALUES ("735d1c02-d161-447e-8480-0d83c7beacf5",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_BATTR
+	VALUES ("735d1c02-d161-447e-8480-0d83c7beacf5",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_ATTR
+	VALUES ("735d1c02-d161-447e-8480-0d83c7beacf5",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	"00000000-0000-0000-0000-000000000000",
+	'MS_Name',
+	'',
+	'',
+	'MS_Name',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("0ce9ea66-cae4-430e-9637-e36f6ac2b36a",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_BATTR
+	VALUES ("0ce9ea66-cae4-430e-9637-e36f6ac2b36a",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_ATTR
+	VALUES ("0ce9ea66-cae4-430e-9637-e36f6ac2b36a",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	"735d1c02-d161-447e-8480-0d83c7beacf5",
+	'Completion_Date',
+	'',
+	'',
+	'Completion_Date',
+	0,
+	"ba5eda7a-def5-0000-0000-00000000000e",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("0d54b8ef-0cd8-4831-833e-d1986f366a4d",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_BATTR
+	VALUES ("0d54b8ef-0cd8-4831-833e-d1986f366a4d",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_ATTR
+	VALUES ("0d54b8ef-0cd8-4831-833e-d1986f366a4d",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	"0ce9ea66-cae4-430e-9637-e36f6ac2b36a",
+	'Percent_Complete',
+	'',
+	'',
+	'Percent_Complete',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000003",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_OIDA
+	VALUES ("735d1c02-d161-447e-8480-0d83c7beacf5",
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	0,
+	'MS_Name');
+INSERT INTO O_ID
+	VALUES (1,
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO O_ID
+	VALUES (2,
+	"ca104ed3-1e90-413a-b908-f13ca2bc8be5");
+INSERT INTO PE_PE
+	VALUES ("ca104ed3-1e90-413a-b908-f13ca2bc8be5",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

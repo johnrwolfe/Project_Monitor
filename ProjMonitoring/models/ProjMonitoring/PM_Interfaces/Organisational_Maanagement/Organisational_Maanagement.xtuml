@@ -1,0 +1,139 @@
+-- BP 7.1.6 content: Interface syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO C_I
+	VALUES ("bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	"00000000-0000-0000-0000-000000000000",
+	'Organisational_Maanagement',
+	'An I/F to allow particular communications with Organisational Management & Stakeholders.');
+INSERT INTO C_EP
+	VALUES ("76fc72ad-4933-4e85-bfb3-49857370c4be",
+	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	-1,
+	'add_Strategic_Goal',
+	'Based on UC00.',
+	1);
+INSERT INTO C_AS
+	VALUES ("76fc72ad-4933-4e85-bfb3-49857370c4be",
+	'add_Strategic_Goal',
+	'Based on UC00.',
+	0,
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("3d03548c-f994-4d5d-8f8a-968045a80834",
+	"76fc72ad-4933-4e85-bfb3-49857370c4be",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Goal_ID',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("f149eaad-ee5f-4fc0-be35-3f36b510e0f1",
+	"76fc72ad-4933-4e85-bfb3-49857370c4be",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Description',
+	'',
+	0,
+	'',
+	"3d03548c-f994-4d5d-8f8a-968045a80834");
+INSERT INTO C_PP
+	VALUES ("a9262b35-8943-4138-87e0-e2b144a0b0b6",
+	"76fc72ad-4933-4e85-bfb3-49857370c4be",
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	'Priority',
+	'',
+	0,
+	'',
+	"f149eaad-ee5f-4fc0-be35-3f36b510e0f1");
+INSERT INTO S_DT_PROXY
+	VALUES ("65dcb48f-06c0-434e-be18-b05dfa982146",
+	"00000000-0000-0000-0000-000000000000",
+	'Priority_Level',
+	'',
+	'',
+	'../../PM_Types/PM_Types.xtuml');
+INSERT INTO C_EP
+	VALUES ("6d65d88f-b602-47af-8987-7acba1849666",
+	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	-1,
+	'update_Strategic_Goal',
+	'Based on UC00.',
+	2);
+INSERT INTO C_AS
+	VALUES ("6d65d88f-b602-47af-8987-7acba1849666",
+	'update_Strategic_Goal',
+	'Based on UC00.',
+	0,
+	"76fc72ad-4933-4e85-bfb3-49857370c4be");
+INSERT INTO C_PP
+	VALUES ("2cd143a4-65f2-4137-9420-40e801459e5f",
+	"6d65d88f-b602-47af-8987-7acba1849666",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Goal_ID',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("aba5c2ed-c5a4-42d1-a60a-62fdae4c297c",
+	"6d65d88f-b602-47af-8987-7acba1849666",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Description',
+	'',
+	0,
+	'',
+	"2cd143a4-65f2-4137-9420-40e801459e5f");
+INSERT INTO C_PP
+	VALUES ("62dffedf-27ef-48e7-b6d6-8e6f0c5642c0",
+	"6d65d88f-b602-47af-8987-7acba1849666",
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	'Priority',
+	'',
+	0,
+	'',
+	"aba5c2ed-c5a4-42d1-a60a-62fdae4c297c");
+INSERT INTO C_EP
+	VALUES ("dd06136d-1f07-42ff-a7e4-dbfb97a61fe1",
+	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	-1,
+	'Notify',
+	'',
+	3);
+INSERT INTO C_AS
+	VALUES ("dd06136d-1f07-42ff-a7e4-dbfb97a61fe1",
+	'Notify',
+	'',
+	1,
+	"6d65d88f-b602-47af-8987-7acba1849666");
+INSERT INTO C_PP
+	VALUES ("8f185628-5593-4c83-9426-85a4b4caebc2",
+	"dd06136d-1f07-42ff-a7e4-dbfb97a61fe1",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Relevant_Person',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("b9e1fcbb-2936-468d-ae21-56417b8ac3a8",
+	"dd06136d-1f07-42ff-a7e4-dbfb97a61fe1",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Message',
+	'',
+	0,
+	'',
+	"8f185628-5593-4c83-9426-85a4b4caebc2");
+INSERT INTO PE_PE
+	VALUES ("bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	1,
+	"077be095-5328-4c6a-8a54-cde91fa66fc5",
+	"00000000-0000-0000-0000-000000000000",
+	6);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("077be095-5328-4c6a-8a54-cde91fa66fc5",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Interfaces',
+	'',
+	0,
+	'../PM_Interfaces.xtuml');

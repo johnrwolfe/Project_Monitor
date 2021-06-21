@@ -1,0 +1,245 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("80dc93c7-74ed-46a6-984d-67063b986bce",
+	'Strategic_Goal',
+	1,
+	'SG',
+	'An organisation develops strategic goals and their priorities for (perhaps) many different reasons, such as:
+specific/general needs, demands, requests, requirements, and advancements.
+Strategic goals are the drivers of the efforts necessary to attain (hopefully) better outcomes for an organisation.
+To attain any strategic goal requires a clear understanding of how the organisation currently fits into its business 
+environment and what benefits, if any, there are in moving from its current position.
+Attainment of strategic goals usually means the adoption of different/improved practices in order to achieve any benefit.
+
+This class derives from UC00.    ',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_TFR
+	VALUES ("7922475a-0b36-4c84-8998-b3a33020aa3d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	'Create',
+	'An operation to CREATE a new STRATEGIC GOAL.
+Based on UC00. ',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'//Create a new Strategic Goal by providing a (hopefully) unique name (SG_Name) and adding a textual Descriotion and a Priority.
+
+select any Strategic_Goal from instances of SG
+where (selected.SG_Name == param.SG_Name);
+
+if ( empty Strategic_Goal)
+	create object instance Strategic_Goal of SG;
+	Strategic_Goal.SG_Name = param.SG_Name;
+	Strategic_Goal.Description = param.Description;
+	Strategic_Goal.Priority = param.Priority;
+	LOG::LogInfo( message: "A new GOAL has been successfully created." );
+	send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new GOAL " + param.SG_Name + "has been created.");
+else
+	LOG::LogFailure( message: "The chosen GOAL NAME already exists.  Please choose a different NAME from any that already exist." );
+end if;',
+	1,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	1);
+INSERT INTO O_TPARM
+	VALUES ("8ac9c5cd-c099-40fe-b966-dff1b8930484",
+	"7922475a-0b36-4c84-8998-b3a33020aa3d",
+	'SG_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("2924f7f4-2813-44ce-bf59-1f5f374507d4",
+	"7922475a-0b36-4c84-8998-b3a33020aa3d",
+	'Description',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"8ac9c5cd-c099-40fe-b966-dff1b8930484",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("6616c6c4-1f25-41e6-8dfa-beccdc7179fc",
+	"7922475a-0b36-4c84-8998-b3a33020aa3d",
+	'Priority',
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	0,
+	'',
+	"2924f7f4-2813-44ce-bf59-1f5f374507d4",
+	'');
+INSERT INTO S_DT_PROXY
+	VALUES ("65dcb48f-06c0-434e-be18-b05dfa982146",
+	"00000000-0000-0000-0000-000000000000",
+	'Priority_Level',
+	'',
+	'',
+	'../../../../PM_Types/PM_Types.xtuml');
+INSERT INTO O_TFR
+	VALUES ("322eaacc-e57a-439f-92a3-eb37d991beed",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	'update_Description',
+	'An operation to UPDATE an existing goal.
+Based on UC00.',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'//Update the description of a Startegic Goal.
+
+select any Strategic_Goal from instances of SG
+where (selected.SG_Name == param.SG_Name);
+
+if ( not empty Strategic_Goal)
+	Strategic_Goal.Description = param.Description;
+	LOG::LogInfo(message : "The change to GOAL DESCRIPTION has been successful. Relevant parties will be notified.");
+	send OrgMan::Notify(Relevant_Person:"Manager", Message: "The DESCRIPTION of " + param.SG_Name + "has been changed.");
+else
+	LOG::LogFailure(message : "The chosen STRATEGIC GOAL does not exist. Perhaps it was misspelt or incorrectly selected");
+end if;',
+	1,
+	'',
+	"7922475a-0b36-4c84-8998-b3a33020aa3d",
+	0,
+	2);
+INSERT INTO O_TPARM
+	VALUES ("8c40046e-eb0e-4339-9e0b-ab9ccad6165f",
+	"322eaacc-e57a-439f-92a3-eb37d991beed",
+	'SG_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("084e3d68-cd6b-402d-bbf5-8c36a9fe5a4e",
+	"322eaacc-e57a-439f-92a3-eb37d991beed",
+	'Description',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"8c40046e-eb0e-4339-9e0b-ab9ccad6165f",
+	'');
+INSERT INTO O_TFR
+	VALUES ("dc7038db-b016-48da-9b13-ba325d960bcf",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	'update_Priority',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'//Update the priority of a Startegic Goal.
+
+select any Strategic_Goal from instances of SG
+where (selected.SG_Name == param.SG_Name);
+
+if ( not empty Strategic_Goal)
+	Strategic_Goal.Priority = param.Priority;
+	LOG::LogInfo(message : "The change to PRIORITY has been successful. Relevant parties will be notified.");
+	send OrgMan::Notify(Relevant_Person:"Manager", Message: "The PRIORITY of " + param.SG_Name + "has been changed.");
+else
+	LOG::LogFailure(message : "The chosen strategic goal does not exist. Perhaps it was misspelt or incorrectly selected");
+end if;',
+	1,
+	'',
+	"322eaacc-e57a-439f-92a3-eb37d991beed",
+	0,
+	3);
+INSERT INTO O_TPARM
+	VALUES ("eff209d9-7da9-45d6-98a8-972f8d2dc96f",
+	"dc7038db-b016-48da-9b13-ba325d960bcf",
+	'SG_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO O_TPARM
+	VALUES ("547c06d4-88f4-4f53-bc07-4d2a457eb19a",
+	"dc7038db-b016-48da-9b13-ba325d960bcf",
+	'Priority',
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	0,
+	'',
+	"eff209d9-7da9-45d6-98a8-972f8d2dc96f",
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("7295d019-b0e2-40d3-be50-84c4290fa44d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_BATTR
+	VALUES ("7295d019-b0e2-40d3-be50-84c4290fa44d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_ATTR
+	VALUES ("7295d019-b0e2-40d3-be50-84c4290fa44d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	"00000000-0000-0000-0000-000000000000",
+	'SG_Name',
+	'A unique name given to a strategic goal.',
+	'',
+	'SG_Name',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("844e9370-b4e3-4c9d-b602-aa81fd48d67d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_BATTR
+	VALUES ("844e9370-b4e3-4c9d-b602-aa81fd48d67d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_ATTR
+	VALUES ("844e9370-b4e3-4c9d-b602-aa81fd48d67d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	"7295d019-b0e2-40d3-be50-84c4290fa44d",
+	'Description',
+	'A succinct textual description clearly enunciating a strategic goal.  This description is editable.',
+	'',
+	'Description',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("62fe3f56-4352-4cfb-840d-427912a4f3a3",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_BATTR
+	VALUES ("62fe3f56-4352-4cfb-840d-427912a4f3a3",
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_ATTR
+	VALUES ("62fe3f56-4352-4cfb-840d-427912a4f3a3",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	"844e9370-b4e3-4c9d-b602-aa81fd48d67d",
+	'Priority',
+	'The assigned PRIORITY of the particular STRATEGIC_GOAL - set simply as one of High, Medium or Low.',
+	'',
+	'Priority',
+	0,
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_OIDA
+	VALUES ("7295d019-b0e2-40d3-be50-84c4290fa44d",
+	"80dc93c7-74ed-46a6-984d-67063b986bce",
+	0,
+	'SG_Name');
+INSERT INTO O_ID
+	VALUES (1,
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO O_ID
+	VALUES (2,
+	"80dc93c7-74ed-46a6-984d-67063b986bce");
+INSERT INTO PE_PE
+	VALUES ("80dc93c7-74ed-46a6-984d-67063b986bce",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

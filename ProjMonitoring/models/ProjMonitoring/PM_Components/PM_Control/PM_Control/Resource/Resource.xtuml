@@ -1,0 +1,115 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("2d6f7b23-452d-4d8e-a191-77e30035a263",
+	'Resource',
+	5,
+	'RES',
+	'RESOURCES are required for all sorts of WORK_ITEMS surrounding a STRATEGIC endeavour.
+For the purposes of the MVP only those RESOURCES outside of the normal WBS tasks for a PROJECT
+are being included - although a future version of the PM may include ALL resources within the PM.
+
+This class is based on UC08.',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_NBATTR
+	VALUES ("8f93662b-e4ba-4d11-9ccb-b8a53d3dba69",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_BATTR
+	VALUES ("8f93662b-e4ba-4d11-9ccb-b8a53d3dba69",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ATTR
+	VALUES ("8f93662b-e4ba-4d11-9ccb-b8a53d3dba69",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263",
+	"00000000-0000-0000-0000-000000000000",
+	'Resource_ID',
+	'',
+	'',
+	'Resource_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000002",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("c38f0c9c-2462-46f9-a45d-4fbee9fa2b10",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_BATTR
+	VALUES ("c38f0c9c-2462-46f9-a45d-4fbee9fa2b10",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ATTR
+	VALUES ("c38f0c9c-2462-46f9-a45d-4fbee9fa2b10",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263",
+	"8f93662b-e4ba-4d11-9ccb-b8a53d3dba69",
+	'Description',
+	'',
+	'',
+	'Description',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("7cf90d0d-2fd5-4ca7-9358-db618f93058d",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_BATTR
+	VALUES ("7cf90d0d-2fd5-4ca7-9358-db618f93058d",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ATTR
+	VALUES ("7cf90d0d-2fd5-4ca7-9358-db618f93058d",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263",
+	"c38f0c9c-2462-46f9-a45d-4fbee9fa2b10",
+	'Res_Type',
+	'',
+	'',
+	'Res_Type',
+	0,
+	"875b72e6-dff6-42c4-9d66-d94640f4da65",
+	'',
+	'');
+INSERT INTO S_DT_PROXY
+	VALUES ("875b72e6-dff6-42c4-9d66-d94640f4da65",
+	"00000000-0000-0000-0000-000000000000",
+	'Resource_Type',
+	'',
+	'',
+	'../../../../PM_Types/PM_Types.xtuml');
+INSERT INTO O_NBATTR
+	VALUES ("54e3edca-7ac8-4ca6-9c53-4922285a8b77",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_BATTR
+	VALUES ("54e3edca-7ac8-4ca6-9c53-4922285a8b77",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ATTR
+	VALUES ("54e3edca-7ac8-4ca6-9c53-4922285a8b77",
+	"2d6f7b23-452d-4d8e-a191-77e30035a263",
+	"7cf90d0d-2fd5-4ca7-9358-db618f93058d",
+	'When_Available',
+	'',
+	'',
+	'When_Available',
+	0,
+	"ba5eda7a-def5-0000-0000-00000000000e",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ID
+	VALUES (1,
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO O_ID
+	VALUES (2,
+	"2d6f7b23-452d-4d8e-a191-77e30035a263");
+INSERT INTO PE_PE
+	VALUES ("2d6f7b23-452d-4d8e-a191-77e30035a263",
+	1,
+	"9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("9ad079f3-abc5-417c-8b37-4084fb0e9dde",
+	"00000000-0000-0000-0000-000000000000",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Control',
+	'',
+	0,
+	'../PM_Control.xtuml');

@@ -1,0 +1,90 @@
+-- BP 7.1.6 content: Package syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO EP_PKG
+	VALUES ("21848788-0acc-4000-82bd-f391322ec121",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	"fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'PM_Time',
+	'',
+	0);
+INSERT INTO GD_MD
+	VALUES ("24f5bc51-45a2-4386-a05c-eb2bb396de7f",
+	112,
+	"21848788-0acc-4000-82bd-f391322ec121",
+	108,
+	0,
+	0,
+	1,
+	1,
+	1,
+	12,
+	1,
+	0,
+	0,
+	0,
+	0,
+	0,
+	'',
+	'ProjMonitoring::PM_Time');
+INSERT INTO DIM_DIA
+	VALUES ("24f5bc51-45a2-4386-a05c-eb2bb396de7f",
+	'',
+	1.000000,
+	0.000000,
+	0.000000,
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO S_SYNC
+	VALUES ("83e8dd57-8ff9-41ba-a3c2-da002cc07d07",
+	"00000000-0000-0000-0000-000000000000",
+	'create_Date',
+	'',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	3,
+	'',
+	0,
+	1);
+INSERT INTO S_SPARM
+	VALUES ("3abc8799-fe45-408e-8f67-4ffafeedc4c3",
+	"83e8dd57-8ff9-41ba-a3c2-da002cc07d07",
+	'Day',
+	"ba5eda7a-def5-0000-0000-000000000002",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
+INSERT INTO S_SPARM
+	VALUES ("00dbb848-ee5e-4cf8-abf8-44525bf3d02b",
+	"83e8dd57-8ff9-41ba-a3c2-da002cc07d07",
+	'Month',
+	"ba5eda7a-def5-0000-0000-000000000002",
+	0,
+	'',
+	"3abc8799-fe45-408e-8f67-4ffafeedc4c3",
+	'');
+INSERT INTO S_SPARM
+	VALUES ("4ecad145-65ac-4b59-b88c-a119a02108cf",
+	"83e8dd57-8ff9-41ba-a3c2-da002cc07d07",
+	'Year',
+	"ba5eda7a-def5-0000-0000-000000000002",
+	0,
+	'',
+	"00dbb848-ee5e-4cf8-abf8-44525bf3d02b",
+	'');
+INSERT INTO PE_PE
+	VALUES ("83e8dd57-8ff9-41ba-a3c2-da002cc07d07",
+	1,
+	"21848788-0acc-4000-82bd-f391322ec121",
+	"00000000-0000-0000-0000-000000000000",
+	1);
+INSERT INTO PE_PE
+	VALUES ("21848788-0acc-4000-82bd-f391322ec121",
+	1,
+	"00000000-0000-0000-0000-000000000000",
+	"00000000-0000-0000-0000-000000000000",
+	7);
+INSERT INTO S_SYS_PROXY
+	VALUES ("fed360c9-cd00-40a7-9299-ecef1edcb505",
+	'ProjMonitoring',
+	1,
+	'../ProjMonitoring.xtuml');
