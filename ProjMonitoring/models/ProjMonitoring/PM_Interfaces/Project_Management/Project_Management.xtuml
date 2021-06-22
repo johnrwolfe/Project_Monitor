@@ -57,38 +57,12 @@ INSERT INTO C_PP
 INSERT INTO C_PP
 	VALUES ("24f9624b-2d6b-402a-817c-9c4c3039e705",
 	"3eb341e0-cd73-4962-a0a5-9882f91168a2",
-	"ba5eda7a-def5-0000-0000-000000000002",
+	"ba5eda7a-def5-0000-0000-000000000004",
 	'PRJ_Name',
 	'',
 	0,
 	'',
 	"00000000-0000-0000-0000-000000000000");
-INSERT INTO C_EP
-	VALUES ("d7294a08-d413-4744-8e1a-1d77176e4de8",
-	"6ca8fb7f-c78f-437e-a777-90725b82b541",
-	-1,
-	'calculate_Variances',
-	'',
-	2);
-INSERT INTO C_AS
-	VALUES ("d7294a08-d413-4744-8e1a-1d77176e4de8",
-	'calculate_Variances',
-	'',
-	0,
-	"3eb341e0-cd73-4962-a0a5-9882f91168a2");
-INSERT INTO C_EP
-	VALUES ("44be572c-d83d-4b8e-a805-7ac00dc77620",
-	"6ca8fb7f-c78f-437e-a777-90725b82b541",
-	-1,
-	'calculate_PIs',
-	'',
-	3);
-INSERT INTO C_AS
-	VALUES ("44be572c-d83d-4b8e-a805-7ac00dc77620",
-	'calculate_PIs',
-	'',
-	0,
-	"d7294a08-d413-4744-8e1a-1d77176e4de8");
 INSERT INTO C_EP
 	VALUES ("b4addec1-bfe2-40f7-857a-bb57713fc6d1",
 	"6ca8fb7f-c78f-437e-a777-90725b82b541",
@@ -101,7 +75,7 @@ INSERT INTO C_AS
 	'Notify',
 	'',
 	1,
-	"44be572c-d83d-4b8e-a805-7ac00dc77620");
+	"3eb341e0-cd73-4962-a0a5-9882f91168a2");
 INSERT INTO C_PP
 	VALUES ("cd847d7b-902d-4491-a54e-1a9eaa3c7dbe",
 	"b4addec1-bfe2-40f7-857a-bb57713fc6d1",

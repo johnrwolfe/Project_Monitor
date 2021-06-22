@@ -557,18 +557,18 @@ INSERT INTO SPR_PEP
 	"64ca1987-132c-45fc-966a-778f6133e262");
 INSERT INTO SPR_PS
 	VALUES ("89125ddc-e274-4623-93e1-d7249df33c0b",
-	'update_Strategic_Goal',
+	'update_Description',
 	'Based on UC00.',
-	'//Updating an existing strategic goal requires 3 inputs. A name of an existing goal, a (replacement) textual description, and a (new) priority of (High, Medium or Low).
-//Call the Strategic_Goal class operation named update_Goal.
+	'//Updating the description of an existing strategic goal requires 2 inputs. A name of an existing goal, a (replacement) textual description.
+//Call the Strategic_Goal class operation named update_Description.
 
 //Note that the particular operation must be class based.  Any instance manipulation will be done by the operation based on the presented Goal_ID.
 
-SG::update_Goal (SG_Name : param.Goal_ID, Description : param.Description, Priority : param.Priority);
+SG::update_Description (SG_Name : param.Goal_ID, Description : param.Description);
 
 // Send a notification of the creation of a new goal to a manager within Organisation_Management.
 
-send OrgMan::Notify( Relevant_Person:"Manager", Message:"A goal has been updated" );',
+send OrgMan::Notify( Relevant_Person:"Manager", Message:"The description of goal has been updated" );',
 	1,
 	0,
 	2);
@@ -576,7 +576,7 @@ INSERT INTO C_EP_PROXY
 	VALUES ("6d65d88f-b602-47af-8987-7acba1849666",
 	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
 	-1,
-	'update_Strategic_Goal',
+	'update_Description',
 	'Based on UC00.',
 	2,
 	'../../PM_Interfaces/Organisational_Maanagement/Organisational_Maanagement.xtuml');
@@ -599,6 +599,35 @@ INSERT INTO C_EP_PROXY
 	'Notify',
 	'',
 	3,
+	'../../PM_Interfaces/Organisational_Maanagement/Organisational_Maanagement.xtuml');
+INSERT INTO SPR_PEP
+	VALUES ("0be1511e-8b87-4316-ab0e-f6895e9abf55",
+	"81b13772-1ce3-4263-bfad-bf954649aa83",
+	"64ca1987-132c-45fc-966a-778f6133e262");
+INSERT INTO SPR_PS
+	VALUES ("0be1511e-8b87-4316-ab0e-f6895e9abf55",
+	'update_Priority',
+	'Based on UC00.',
+	'//Updating the priority of an existing strategic goal requires 2 inputs. A name of an existing goal, a priority level (High, Medium, Low).
+//Call the Strategic_Goal class operation named update_Priority.
+
+//Note that the particular operation must be class based.  Any instance manipulation will be done by the operation based on the presented Goal_ID.
+
+SG::update_Priority (SG_Name : param.Goal_ID, Priority : param.Priority);
+
+// Send a notification of the creation of a new goal to a manager within Organisation_Management.
+
+send OrgMan::Notify( Relevant_Person:"Manager", Message:"The description of goal has been updated" );',
+	1,
+	0,
+	2);
+INSERT INTO C_EP_PROXY
+	VALUES ("81b13772-1ce3-4263-bfad-bf954649aa83",
+	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	-1,
+	'update_Priority',
+	'Based on UC00.',
+	2,
 	'../../PM_Interfaces/Organisational_Maanagement/Organisational_Maanagement.xtuml');
 INSERT INTO C_I_PROXY
 	VALUES ("bd829dba-1165-4562-a8f7-e2a65b6e713c",
@@ -954,7 +983,14 @@ INSERT INTO SPR_PS
 	VALUES ("01af2a1a-d759-4ae1-9374-434c0ae80098",
 	'input_EV_Data',
 	'',
-	'',
+	'//A Project Manager (or representative) needs to provide basic Earned Value data to instantiate a new Performance Report.
+//Such input could be required )and input) at any time during the course of a project, but usually at articulary ''milestones''.
+//All varienaces, indices etc. for a project are calculated automatically after the input has been provided.
+
+PERFREP::Create (PRJ_Name : param.PRJ_Name, BAC : param.BAC, EV : param.EV, PV : param.PV, AC : param.AC);
+
+LOG::LogInfo (message : "The basc Earned Value inputs for a new performance report for " + param.PRJ_Name + " have been provided");
+',
 	1,
 	0,
 	1);
@@ -965,46 +1001,6 @@ INSERT INTO C_EP_PROXY
 	'input_EV_Data',
 	'',
 	1,
-	'../../PM_Interfaces/Project_Management/Project_Management.xtuml');
-INSERT INTO SPR_PEP
-	VALUES ("7b68dc7c-5d3c-48dd-b739-17c26e8c2278",
-	"d7294a08-d413-4744-8e1a-1d77176e4de8",
-	"5736ce8c-64ba-431b-913c-f9dab14aa11f");
-INSERT INTO SPR_PS
-	VALUES ("7b68dc7c-5d3c-48dd-b739-17c26e8c2278",
-	'calculate_Variances',
-	'',
-	'',
-	1,
-	0,
-	2);
-INSERT INTO C_EP_PROXY
-	VALUES ("d7294a08-d413-4744-8e1a-1d77176e4de8",
-	"6ca8fb7f-c78f-437e-a777-90725b82b541",
-	-1,
-	'calculate_Variances',
-	'',
-	2,
-	'../../PM_Interfaces/Project_Management/Project_Management.xtuml');
-INSERT INTO SPR_PEP
-	VALUES ("877e8f93-8b65-4595-a424-22b5e94a5fc2",
-	"44be572c-d83d-4b8e-a805-7ac00dc77620",
-	"5736ce8c-64ba-431b-913c-f9dab14aa11f");
-INSERT INTO SPR_PS
-	VALUES ("877e8f93-8b65-4595-a424-22b5e94a5fc2",
-	'calculate_PIs',
-	'',
-	'',
-	1,
-	0,
-	3);
-INSERT INTO C_EP_PROXY
-	VALUES ("44be572c-d83d-4b8e-a805-7ac00dc77620",
-	"6ca8fb7f-c78f-437e-a777-90725b82b541",
-	-1,
-	'calculate_PIs',
-	'',
-	3,
 	'../../PM_Interfaces/Project_Management/Project_Management.xtuml');
 INSERT INTO SPR_PEP
 	VALUES ("be6cd5e8-3473-4d41-b0f3-deec37f93889",

@@ -56,12 +56,12 @@ INSERT INTO C_EP
 	VALUES ("6d65d88f-b602-47af-8987-7acba1849666",
 	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
 	-1,
-	'update_Strategic_Goal',
+	'update_Description',
 	'Based on UC00.',
 	2);
 INSERT INTO C_AS
 	VALUES ("6d65d88f-b602-47af-8987-7acba1849666",
-	'update_Strategic_Goal',
+	'update_Description',
 	'Based on UC00.',
 	0,
 	"76fc72ad-4933-4e85-bfb3-49857370c4be");
@@ -83,15 +83,6 @@ INSERT INTO C_PP
 	0,
 	'',
 	"2cd143a4-65f2-4137-9420-40e801459e5f");
-INSERT INTO C_PP
-	VALUES ("62dffedf-27ef-48e7-b6d6-8e6f0c5642c0",
-	"6d65d88f-b602-47af-8987-7acba1849666",
-	"65dcb48f-06c0-434e-be18-b05dfa982146",
-	'Priority',
-	'',
-	0,
-	'',
-	"aba5c2ed-c5a4-42d1-a60a-62fdae4c297c");
 INSERT INTO C_EP
 	VALUES ("dd06136d-1f07-42ff-a7e4-dbfb97a61fe1",
 	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
@@ -123,6 +114,37 @@ INSERT INTO C_PP
 	0,
 	'',
 	"8f185628-5593-4c83-9426-85a4b4caebc2");
+INSERT INTO C_EP
+	VALUES ("81b13772-1ce3-4263-bfad-bf954649aa83",
+	"bd829dba-1165-4562-a8f7-e2a65b6e713c",
+	-1,
+	'update_Priority',
+	'Based on UC00.',
+	2);
+INSERT INTO C_AS
+	VALUES ("81b13772-1ce3-4263-bfad-bf954649aa83",
+	'update_Priority',
+	'Based on UC00.',
+	0,
+	"dd06136d-1f07-42ff-a7e4-dbfb97a61fe1");
+INSERT INTO C_PP
+	VALUES ("df425687-f67a-4dd6-b32a-b876f99e24e7",
+	"81b13772-1ce3-4263-bfad-bf954649aa83",
+	"ba5eda7a-def5-0000-0000-000000000004",
+	'Goal_ID',
+	'',
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO C_PP
+	VALUES ("4d34caad-6ace-44eb-910a-4c3eb13a7c97",
+	"81b13772-1ce3-4263-bfad-bf954649aa83",
+	"65dcb48f-06c0-434e-be18-b05dfa982146",
+	'Priority',
+	'',
+	0,
+	'',
+	"df425687-f67a-4dd6-b32a-b876f99e24e7");
 INSERT INTO PE_PE
 	VALUES ("bd829dba-1165-4562-a8f7-e2a65b6e713c",
 	1,

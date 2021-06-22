@@ -38,7 +38,7 @@ if ( not empty Project)
 		Performance_Report.PRJ_Name = param.PRJ_Name;
 		Performance_Report.Rep_ID = 1;
 		
-		LOG::LogInfo( message: "A new empty PERFORMANCE REPORT has been successfully created." );
+		LOG::LogInfo( message: "A PERFORMANCE REPORT has been successfully created." );
 		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new PERFORMANCE REPORT " + param.PRJ_Name + "has been created.");
 		
 	else
@@ -170,8 +170,8 @@ if ( not empty Project)
 		Performance_Report.PRJ_Name = param.PRJ_Name;
 		Performance_Report.Rep_ID = last_report + 1;
 		
-		LOG::LogInfo( message: "A new empty PERFORMANCE REPORT has been successfully created." );
-		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A new PERFORMANCE REPORT " + param.PRJ_Name + "has been created.");
+		LOG::LogInfo( message: "A PERFORMANCE REPORT has been successfully updated with cost & schedule variances." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PERFORMANCE REPORT " + param.PRJ_Name + "has been updated with cost & schedule variances.");
 	
 	//Now use the base Earned Value parameters to calculate the variances.
 	
@@ -180,6 +180,8 @@ if ( not empty Project)
 		Performance_Report.CV = Performance_Report.EV - Performance_Report.AC;
 		
 		LOG::LogReal( message: "Cost Variance has been calculate at" , r: Performance_Report.CV);
+		
+	//Schedule Variance
 		
 		Performance_Report.SV = Performance_Report.EV - Performance_Report.PV;
 		
@@ -214,7 +216,59 @@ INSERT INTO O_TFR
 	'This operation is based on UC14.',
 	"ba5eda7a-def5-0000-0000-000000000000",
 	0,
-	'',
+	'//Calculate Performance Indices relating to the last report for a specific project.
+
+//Check that the named project exists.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+
+if ( not empty Project)
+	
+	//If it exists then check whether any performance report exists for the named project.
+	//If a report doesn''t then create the new report with Rep_ID = 1.  Remembering to also make Last_Rep_ID = 1.
+	//If it does exist then create the new report with Rep_ID = Last_Rep_ID + 1.
+	
+	select many Reports from instances of PERFREP
+ 	where (selected.PRJ_Name == param.PRJ_Name);
+ 	
+ 		last_report = 0;
+		
+		for each report in Reports
+			while (report.Rep_ID > last_report)
+			last_report = report.Rep_ID;
+			end while;
+		end for;
+
+		create object instance Performance_Report of PERFREP;
+		Performance_Report.PRJ_Name = param.PRJ_Name;
+		Performance_Report.Rep_ID = last_report + 1;
+		
+		LOG::LogInfo( message: "A PERFORMANCE REPORT has been successfully updated with performance indices." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PERFORMANCE REPORT " + param.PRJ_Name + "has been updated with performance indices.");
+	
+	//Now use the base Earned Value parameters to calculate the variances.
+	
+	//Cost Peeformance Index
+	
+		Performance_Report.CPI = Performance_Report.EV / Performance_Report.AC;
+		
+		LOG::LogReal( message: "Cost Peeformance Index has been calculated at" , r: Performance_Report.CPI);
+		
+	//Schedule Peeformance Index
+		
+		Performance_Report.SPI = Performance_Report.EV / Performance_Report.PV;
+		
+		LOG::LogReal( message: "Schedule Performance Index is" , r: Performance_Report.SPI);
+
+
+else
+		LOG::LogFailure( message: "The chosen PROJECT does not exist.  Please choose a PROJECT NAME that already exists." );
+end if;
+
+//Call operation to Calculate Variances for the last report.
+
+		PERFREP::calc_Completion_Estimates(PRJ_Name:param.PRJ_Name);',
 	1,
 	'',
 	"17ac84a4-8234-4318-8a48-06273d723012",
@@ -230,44 +284,81 @@ INSERT INTO O_TPARM
 	"00000000-0000-0000-0000-000000000000",
 	'');
 INSERT INTO O_TFR
-	VALUES ("379862e0-22ab-4557-baed-9a5f8da9b647",
+	VALUES ("dbdc7629-e770-4522-910f-17fae3c525b4",
 	"debe4626-cfe9-48fd-8112-e083c26efc69",
-	'show_EV_PIs',
-	'This operation is based on UC14-1.',
+	'calc_Completion_Estimates',
+	'This operation is based on UC15.',
 	"ba5eda7a-def5-0000-0000-000000000000",
-	1,
-	'',
+	0,
+	'//Calculate Completion Estimates relating to the last report for a specific project.
+
+//Check that the named project exists.
+
+select any Project from instances of PRJ
+ where (selected.PRJ_Name == param.PRJ_Name);
+
+if ( not empty Project)
+	
+	//If it exists then check whether any performance report exists for the named project.
+	//If a report doesn''t then create the new report with Rep_ID = 1.  Remembering to also make Last_Rep_ID = 1.
+	//If it does exist then create the new report with Rep_ID = Last_Rep_ID + 1.
+	
+	select many Reports from instances of PERFREP
+ 	where (selected.PRJ_Name == param.PRJ_Name);
+ 	
+ 		last_report = 0;
+		
+		for each report in Reports
+			while (report.Rep_ID > last_report)
+			last_report = report.Rep_ID;
+			end while;
+		end for;
+
+		create object instance Performance_Report of PERFREP;
+		Performance_Report.PRJ_Name = param.PRJ_Name;
+		Performance_Report.Rep_ID = last_report + 1;
+		
+		LOG::LogInfo( message: "A PERFORMANCE REPORT has been successfully updated with completion estimates." );
+		send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PERFORMANCE REPORT " + param.PRJ_Name + "has been updated with completion estimates.");
+	
+	//Now use the base Earned Value parameters to calculate the variances.
+	
+	//Estimate at Completion  -- must be calculated first.
+	
+		Performance_Report.EAC = Performance_Report.BAC / Performance_Report.CPI;
+		
+		LOG::LogReal( message: "Estimate At Completion has been calculated at" , r: Performance_Report.EAC);
+		
+	//Variance at Completion
+		
+		Performance_Report.VAC = Performance_Report.BAC - Performance_Report.EAC;
+		
+		LOG::LogReal( message: "Variance At Completion is" , r: Performance_Report.VAC);
+		
+	//Estimate to Complete
+		
+		Performance_Report.ETC = Performance_Report.EAC - Performance_Report.AC;
+		
+		LOG::LogReal( message: "Estimate to Complete is" , r: Performance_Report.ETC);		
+
+
+else
+		LOG::LogFailure( message: "The chosen PROJECT does not exist.  Please choose a PROJECT NAME that already exists." );
+end if;',
 	1,
 	'',
 	"46c04271-b532-400b-8347-20e00407300a",
 	0,
-	4);
-INSERT INTO O_TFR
-	VALUES ("dbdc7629-e770-4522-910f-17fae3c525b4",
-	"debe4626-cfe9-48fd-8112-e083c26efc69",
-	'calc_Completion_Params',
-	'This operation is based on UC15.',
-	"ba5eda7a-def5-0000-0000-000000000000",
-	1,
-	'',
-	1,
-	'',
-	"379862e0-22ab-4557-baed-9a5f8da9b647",
-	0,
 	5);
-INSERT INTO O_TFR
-	VALUES ("a02c70b1-4f88-4d44-bffc-2bc40286f12b",
-	"debe4626-cfe9-48fd-8112-e083c26efc69",
-	'XYZ',
-	'',
-	"ba5eda7a-def5-0000-0000-000000000000",
-	1,
-	'',
-	1,
-	'',
+INSERT INTO O_TPARM
+	VALUES ("240b3af9-3e5e-4b1a-bc24-b9479e49b1df",
 	"dbdc7629-e770-4522-910f-17fae3c525b4",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
 	0,
-	6);
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
 INSERT INTO O_NBATTR
 	VALUES ("76434f9b-b069-4b88-92d7-3a523a006d3c",
 	"debe4626-cfe9-48fd-8112-e083c26efc69");

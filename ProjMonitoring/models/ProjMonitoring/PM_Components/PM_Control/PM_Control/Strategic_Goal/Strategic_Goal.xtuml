@@ -83,7 +83,7 @@ INSERT INTO O_TFR
 	'An operation to UPDATE an existing goal.
 Based on UC00.',
 	"ba5eda7a-def5-0000-0000-000000000000",
-	1,
+	0,
 	'//Update the description of a Startegic Goal.
 
 select any Strategic_Goal from instances of SG
@@ -125,7 +125,7 @@ INSERT INTO O_TFR
 	'update_Priority',
 	'',
 	"ba5eda7a-def5-0000-0000-000000000000",
-	1,
+	0,
 	'//Update the priority of a Startegic Goal.
 
 select any Strategic_Goal from instances of SG
