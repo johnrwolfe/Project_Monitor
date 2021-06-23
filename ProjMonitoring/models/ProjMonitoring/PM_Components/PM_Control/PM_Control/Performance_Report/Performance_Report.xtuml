@@ -359,6 +359,98 @@ INSERT INTO O_TPARM
 	'',
 	"00000000-0000-0000-0000-000000000000",
 	'');
+INSERT INTO O_TFR
+	VALUES ("1919c5b9-8112-419a-b54e-fc9462762b1d",
+	"debe4626-cfe9-48fd-8112-e083c26efc69",
+	'calc_EV_PIs_OALIssue',
+	'',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	0,
+	'//Calculate Performance Indices relating to the last report for a specific project.
+//Check that the named project exists.
+select any Project from instances of PRJ
+  where (selected.PRJ_Name == param.PRJ_Name);
+if ( not empty Project)
+  //If it exists then check whether any performance report exists for the named project.
+  //If a report doesn''t then create the new report with Rep_ID = 1. Remembering to also make Last_Rep_ID = 1.
+  //If it does exist then create the new report with Rep_ID = Last_Rep_ID + 1.
+  select many Reports from instances of PERFREP
+    where (selected.PRJ_Name == param.PRJ_Name);
+  last_report = 0;
+  for each report in Reports
+    while (report.Rep_ID > last_report)
+      last_report = report.Rep_ID;
+    end while;
+  end for;
+  create object instance Performance_Report of PERFREP;
+  Performance_Report.PRJ_Name = param.PRJ_Name;
+  Performance_Report.Rep_ID = last_report + 1;
+  LOG::LogInfo( message: "A PERFORMANCE REPORT has been successfully updated with performance indices." );
+  send OrgMan::Notify(Relevant_Person:"Manager", Message:"A PERFORMANCE REPORT " +
+    param.PRJ_Name + "has been updated with performance indices.");
+  //Now use the base Earned Value parameters to calculate the performance indices.
+  //Cost Performance Index
+  Performance_Report.CPI = Performance_Report.EV / Performance_Report.AC;
+  LOG::LogReal( message: "Cost Performance Index has been calculated at" , r:Performance_Report.CPI);
+  // Determine performance message content and notify manager.
+  CPI = Performance_Report.CPI;
+  if (CPI < 0.95)
+    LOG::LogInfo( message: "Project is OVER budget by more than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is OVER budget by more than 5%. If the project is similarly BEHIND schedule, then a replan may be required!");
+  elif (1.0 > CPI and CPI > 0.95)
+    LOG::LogInfo( message: "Project is OVER budget by less than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is OVER budget by less than 5%. Keep watch!");
+  elif (CPI == 1.0)
+    LOG::LogInfo( message: "Project is ON budget.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is ON budget. Excellent!");
+  elif (1.0 < CPI and CPI < 1.05)
+    LOG::LogInfo( message: "Project is UNDER budget by less than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is UNDER budget by less than 5%. Super!");
+  else
+    LOG::LogInfo( message: "Project is UNDER budget by more than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is UNDER budget by more than 5%. If the project is similarly ahead schedule, then a replan may be required!");
+  end if;
+  //Schedule Performance Index
+  Performance_Report.SPI = Performance_Report.EV / Performance_Report.PV;
+  LOG::LogReal( message: "Schedule Performance Index is" , r: Performance_Report.SPI);
+  //Determine performance message content and notify manager.
+  SPI = Performance_Report.SPI;
+  if (SPI < 0.95)
+    LOG::LogInfo( message: "Project is BEHIND schedule by more than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is BEHIND schedule by more than 5%. If the project is similarly OVER budget, then a replan may be required!");
+  elif (1.0 > SPI and SPI > 0.95)
+    LOG::LogInfo( message: "Project is BEHIND schedule by less than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is BEHIND schedule by less than 5%. Keep watch!");
+  elif (SPI == 1.0)
+    LOG::LogInfo( message: "Project is ON schedule.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is ON schedule.Excellent!");
+  elif (1.0 < SPI and SPI < 1.05)
+    LOG::LogInfo( message: "Project is AHEAD of schedule by less than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is AHEAD of schedule by less than 5%. Super!");
+  else
+    LOG::LogInfo( message: "Project is AHEAD of schedule by more than 5%.");
+    send PrjMan::Notify( Relevant_Person: "Manager", Message: "Project is AHEAD of schedule by more than 5%. If the project is similarly UNDER budget, then a replan may be required!");
+  end if;
+  else 
+    LOG::LogFailure( message: "The chosen PROJECT does not exist. Please choose a PROJECT NAME that already exists." );
+  end if;
+//Call operation to Calculate Variances for the last report.
+PERFREP::calc_Completion_Estimates(PRJ_Name:param.PRJ_Name);
+// Based on UC14 and UC14-1 ERROR HERE: Expecting ''end''',
+	1,
+	'',
+	"dbdc7629-e770-4522-910f-17fae3c525b4",
+	0,
+	6);
+INSERT INTO O_TPARM
+	VALUES ("52d9301c-9f4c-462c-ae1b-336a26221fb6",
+	"1919c5b9-8112-419a-b54e-fc9462762b1d",
+	'PRJ_Name',
+	"ba5eda7a-def5-0000-0000-000000000004",
+	0,
+	'',
+	"00000000-0000-0000-0000-000000000000",
+	'');
 INSERT INTO O_NBATTR
 	VALUES ("76434f9b-b069-4b88-92d7-3a523a006d3c",
 	"debe4626-cfe9-48fd-8112-e083c26efc69");
